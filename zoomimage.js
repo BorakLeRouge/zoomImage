@@ -7,6 +7,8 @@
 //  <img src="xxx" class="zoom image" />
 //
 
+function clog(c) { console.log(c) ; }
+
 function ZoomImage(id) {
 
    // ----- Les variables de travail, Permanente -----
@@ -143,16 +145,16 @@ function ZoomImage(id) {
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].src ;
             this.zoomimagePHOTOURL[ob[idx].src] = this.zoomimageCOUNT ;
             ob[idx].onclick = function() { zeThis.zoomimageURL(this.src); return false ;} ;
-            ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ;
+            ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
          }
          if(ob[idx].tagName == "A")
          {  this.zoomimageCOUNT++ ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].href ;
             this.zoomimagePHOTOURL[ob[idx].href] = this.zoomimageCOUNT ;
             ob[idx].onclick = function() { zeThis.zoomimageURL(this.href); return false ;} ;
-            ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ;
+            ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
          }
-      }
+      } 
       // --- Chargement en cours
       document.write('<div id="zoomimage_fond" class="cache" onclick="'+this.id+'zoomimage_FondFermer();" >') ;
       document.write('<div id="zoomimage_cadre_0" class="cache" >') ;
