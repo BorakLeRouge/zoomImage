@@ -14,7 +14,6 @@ function ZoomImage(id) {
    // ----- Les variables de travail, Permanente -----
    this.id                  = id ;
    this.zoomimagePHOTO      = new Array() ;
-   this.zoomimagePHOTOURL   = new Array() ;
    this.zoomimageCOUNT      = 0 ;
    this.zoomimagePLAY       = false ;
    this.zoomimagePOS        = -1 ;
@@ -33,7 +32,7 @@ function ZoomImage(id) {
    // ----- Diaporama, affichage image + 1 -----
    this.zoomimage_diapo = function(pos)
    {  if (pos == this.zoomimagePOS && this.zoomimagePLAY)
-      {  zoomimage(pos + 1) ; 
+      {  this.zoomimage(pos + 1) ; 
       }
    }
 
@@ -44,17 +43,11 @@ function ZoomImage(id) {
       this.zoomimagePLAY = !this.zoomimagePLAY ;
       if (this.zoomimagePLAY)
       {  document.getElementById("zoomimage_play").src ="zoomimage_pause.png" ; 
-         setTimeout(this.id+"zoomimage_diapo("+pos+")", 200);
+         setTimeout(this.id+".zoomimage_diapo("+pos+")", 200);
       }
       else
       {  document.getElementById("zoomimage_play").src = "zoomimage_play.png" ;
       }
-   }
-
-
-   // ----- Zoom sur une image -----
-   this.zoomimageURL = function(url)
-   { this.zoomimage(zoomimagePHOTOURL[url]);
    }
 
    this.zoomimage = function(pos)
@@ -69,20 +62,20 @@ function ZoomImage(id) {
 
       // * * Préparation contenu du DIV * *
       LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_1" onload="'+this.id
-               +'zoomimage_chargimg(' + (this.zoomimagePOS) + ');" onclick="'+this.id
-               +'zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
-      if (zoomimageCOUNT > 1)
-      {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="'+this.id+'zoomimage_Fermer();" />' ;
+               +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" onclick="'+this.id
+               +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
+      if (this.zoomimageCOUNT > 1)
+      {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="'+this.id+'.zoomimage_Fermer();" />' ;
          LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="'+this.id
-                  +'zoomimageCL(' + (this.zoomimagePOS - 1) + ');" />' ;
-         if (zoomimagePLAY)
+                  +'.zoomimageCL(' + (this.zoomimagePOS - 1) + ');" />' ;
+         if (this.zoomimagePLAY)
          {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play" class="zoomimage_play" onclick="'+this.id
-                     +'zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
+                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
          else
          {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play" class="zoomimage_play" onclick="'+this.id
-                     +'zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
+                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
             LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="'+this.id   
-                     +'zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
+                     +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
       }
 
       // * * Affichage * *
@@ -109,11 +102,11 @@ function ZoomImage(id) {
 
       // Prechargement du suivant
       let suiv = new Image() ;
-      suiv.src = zoomimagePHOTO[this.zoomimage_recadrepos(pos + 1)] ;
+      suiv.src = this.zoomimagePHOTO[this.zoomimage_recadrepos(pos + 1)] ;
 
       // Diaporama auto
-      if (zoomimagePLAY)
-      {  setTimeout(this.id+"zoomimage_diapo("+pos+")", 4000);
+      if (this.zoomimagePLAY)
+      {  setTimeout(this.id+".zoomimage_diapo("+pos+")", 4000);
       }
    }
 
@@ -142,21 +135,21 @@ function ZoomImage(id) {
       for (idx in ob)
       {  if(ob[idx].tagName == "IMG")
          {  this.zoomimageCOUNT++ ;
+            let i = this.zoomimageCOUNT ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].src ;
-            this.zoomimagePHOTOURL[ob[idx].src] = this.zoomimageCOUNT ;
-            ob[idx].onclick = function() { zeThis.zoomimageURL(this.src); return false ;} ;
+            ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
             ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
          }
          if(ob[idx].tagName == "A")
          {  this.zoomimageCOUNT++ ;
+            let i = this.zoomimageCOUNT ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].href ;
-            this.zoomimagePHOTOURL[ob[idx].href] = this.zoomimageCOUNT ;
-            ob[idx].onclick = function() { zeThis.zoomimageURL(this.href); return false ;} ;
+            ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
             ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
          }
       } 
       // --- Chargement en cours
-      document.write('<div id="zoomimage_fond" class="cache" onclick="'+this.id+'zoomimage_FondFermer();" >') ;
+      document.write('<div id="zoomimage_fond" class="cache" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
       document.write('<div id="zoomimage_cadre_0" class="cache" >') ;
       document.write('<p>Loading . . .<br />') ;
       document.write('<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>') ;
