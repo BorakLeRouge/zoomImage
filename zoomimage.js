@@ -127,6 +127,27 @@ function ZoomImage(id) {
 
 
 
+   // * * * * animation sur opacité * * * * *
+   this.boHide = function(id) {
+      var s = document.getElementById(id).style ;
+      var result = parseFloat(s.opacity) - 0.1 ;
+      s.opacity = result ;
+      if (result >= 0) {
+         setTimeout(function(){boHide(id)}, 60);
+      } else { s.display = 'none' ; }
+   }
+   this.boShow = function(id) {
+      var s = document.getElementById(id).style ;
+      var result = parseFloat(s.opacity) + 0.1 ;
+      s.display = 'block' ;
+      s.opacity = result ;
+      if (result <= 1) {
+         setTimeout(function(){boShow(id)}, 60);
+      }
+   }
+
+
+
    // ----- Base d'affichage et de mise en place du diaporama -----
    this.zoomimage_placezoom = function()
    {  // --- Recherche classe zoomimage ---
@@ -149,13 +170,13 @@ function ZoomImage(id) {
          }
       } 
       // --- Chargement en cours
-      document.write('<div id="zoomimage_fond" class="cache" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
-      document.write('<div id="zoomimage_cadre_0" class="cache" >') ;
+      document.write('<div id="zoomimage_fond" class="cache" style="opacity: 1;" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
+      document.write('<div id="zoomimage_cadre_0" class="cache" style="opacity: 1;">') ;
       document.write('<p>Loading . . .<br />') ;
       document.write('<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>') ;
       document.write('</div>') ;
       // --- Prepar Image 
-      document.write('<div id="zoomimage_cadre_1" class="cache" ></div>') ;  
+      document.write('<div id="zoomimage_cadre_1" class="cache" style="opacity: 1;"></div>') ;  
       document.write('</div>') ;
    }
 
