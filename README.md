@@ -1,8 +1,8 @@
-# ZoomImage - Diaporama Javascript
+# ZoomImage - Diaporama Javascript sur page Html
 
 ## présentation
 
-A partir d'un ensemble d'image sur une page Web, ce script JavaScript permet de zoomer sur les images tout en installant un diaporama s'il y a plusieurs images.
+A partir d'un ensemble d'images sur une page Web, ce script JavaScript permet de zoomer sur les images tout en installant un diaporama s'il y a plusieurs images.
 
 ## mise en place et fonctionnement
 
