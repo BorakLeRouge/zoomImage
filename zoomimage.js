@@ -13,6 +13,8 @@ function ZoomImage(id) {
 
    // ----- Les variables de travail, Permanente -----
    this.id                  = id ;
+   this.zoomimageNoCadrePrc = 1 ;
+   this.zoomimageNoCadre    = 2 ;
    this.zoomimagePHOTO      = new Array() ;
    this.zoomimageCOUNT      = 0 ;
    this.zoomimagePLAY       = false ;
@@ -52,16 +54,19 @@ function ZoomImage(id) {
 
    this.zoomimage = function(pos)
    { // * * Affichage du fond * *    
+      this.zoomimageNoCadrePrc = this.zoomimageNoCadre ;
+      this.zoomimageNoCadre = 3 - this.zoomimageNoCadre ; 
       this.zoomimagePOS = this.zoomimage_recadrepos(pos) ; 
-      let zoomimg = this.zoomimagePHOTO[this.zoomimagePOS]
+      let zoomimg = this.zoomimagePHOTO[this.zoomimagePOS] ;
 
       // * * Fermeture Div Prec * * 
-      let ZeObjDiv = document.getElementById("zoomimage_cadre_1") ;
+      let ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadrePrc) ;
       ZeObjDiv.className = "cache" ;
       ZeObjDiv.innerHTML = ""
+      ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
       // * * Préparation contenu du DIV * *
-      LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_1" onload="'+this.id
+      LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="'+this.id
                +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" onclick="'+this.id
                +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
       if (this.zoomimageCOUNT > 1)
@@ -79,7 +84,10 @@ function ZoomImage(id) {
       }
 
       // * * Affichage * *
-      document.getElementById("zoomimage_fond").className = "affich" ;
+      if (document.getElementById("zoomimage_fond").className != 'affich') {
+         document.getElementById("zoomimage_fond").className = "affich" ;
+         this.boShow("zoomimage_fond") ;
+      }
       document.getElementById("zoomimage_cadre_0").className = "affich" ;
       ZeObjDiv.className = "cache" ;
       ZeObjDiv.innerHTML = LeCont ;  
@@ -98,7 +106,7 @@ function ZoomImage(id) {
    this.zoomimage_chargimg = function(pos)
    { if (pos != this.zoomimagePOS) { return ; }
       document.getElementById("zoomimage_cadre_0").className = "cache" ;
-      document.getElementById("zoomimage_cadre_1").className = "affich" ; 
+      document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre).className = "affich" ; 
 
       // Prechargement du suivant
       let suiv = new Image() ;
@@ -114,8 +122,8 @@ function ZoomImage(id) {
    // ----- Fermer le diaporama -----
    this.zoomimage_Fermer = function()
    {  this.zoomimagePOS = -1 ;
-      document.getElementById("zoomimage_cadre_1").className = "cache" ;
-      document.getElementById("zoomimage_fond").className = "cache" ;
+      document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre).className = "cache" ;
+      this.boHide("zoomimage_fond")
       this.zoomimagePLAY  = false ;
    }
    this.zoomimage_FondFermer = function()
@@ -128,22 +136,30 @@ function ZoomImage(id) {
 
 
    // * * * * animation sur opacité * * * * *
-   this.boHide = function(id) {
-      var s = document.getElementById(id).style ;
-      var result = parseFloat(s.opacity) - 0.1 ;
+   this.boHideBcl = function(id, trThis) {
+      let s = document.getElementById(id).style ;
+      let result = parseFloat(s.opacity) - 0.1 ;
       s.opacity = result ;
-      if (result >= 0) {
-         setTimeout(function(){boHide(id)}, 60);
-      } else { s.display = 'none' ; }
+      if (result >= 0.05) {
+         setTimeout(function(){trThis.boHideBcl(id, trThis)}, 60);
+      } else { document.getElementById(id).className = "cache" ; }
+   }
+   this.boHide = function(id) {
+      document.getElementById(id).style.opacity = 1 ;
+      this.boHideBcl(id, this) ;
+   }
+   this.boShowBcl = function(id, trThis) {
+      let s = document.getElementById(id).style ;
+      let result = parseFloat(s.opacity) + 0.1 ;
+      s.opacity = result ;
+      if (result <= 0.95) {
+         setTimeout(function(){trThis.boShowBcl(id, trThis)}, 60);
+      }
    }
    this.boShow = function(id) {
-      var s = document.getElementById(id).style ;
-      var result = parseFloat(s.opacity) + 0.1 ;
-      s.display = 'block' ;
-      s.opacity = result ;
-      if (result <= 1) {
-         setTimeout(function(){boShow(id)}, 60);
-      }
+      document.getElementById(id).style.opacity = 0 ;
+      document.getElementById(id).className = "affich" ;
+      this.boShowBcl(id, this) ;
    }
 
 
@@ -170,13 +186,14 @@ function ZoomImage(id) {
          }
       } 
       // --- Chargement en cours
-      document.write('<div id="zoomimage_fond" class="cache" style="opacity: 1;" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
+      document.write('<div id="zoomimage_fond" class="cache" style="opacity: 0;" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
       document.write('<div id="zoomimage_cadre_0" class="cache" style="opacity: 1;">') ;
       document.write('<p>Loading . . .<br />') ;
       document.write('<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>') ;
       document.write('</div>') ;
       // --- Prepar Image 
-      document.write('<div id="zoomimage_cadre_1" class="cache" style="opacity: 1;"></div>') ;  
+      document.write('<div id="zoomimage_cadre_1" class="cache" style="opacity: 1;"></div>') ; 
+      document.write('<div id="zoomimage_cadre_2" class="cache" style="opacity: 1;"></div>') ; 
       document.write('</div>') ;
    }
 
