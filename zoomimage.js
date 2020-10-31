@@ -44,11 +44,11 @@ function ZoomImage(id) {
    {  this.zoomimageInactClick = true ;
       this.zoomimagePLAY = !this.zoomimagePLAY ;
       if (this.zoomimagePLAY)
-      {  document.getElementById("zoomimage_play").src ="zoomimage_pause.png" ; 
+      {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src ="zoomimage_pause.png" ; 
          setTimeout(this.id+".zoomimage_diapo("+pos+")", 200);
       }
       else
-      {  document.getElementById("zoomimage_play").src = "zoomimage_play.png" ;
+      {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src = "zoomimage_play.png" ;
       }
    }
 
@@ -60,10 +60,8 @@ function ZoomImage(id) {
       let zoomimg = this.zoomimagePHOTO[this.zoomimagePOS] ;
 
       // * * Fermeture Div Prec * * 
-      let ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadrePrc) ;
-      ZeObjDiv.className = "cache" ;
-      ZeObjDiv.innerHTML = ""
-      ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre) ;
+      this.boHide("zoomimage_cadre_"+this.zoomimageNoCadrePrc) ;
+      let ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
       // * * Préparation contenu du DIV * *
       LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="'+this.id
@@ -74,10 +72,10 @@ function ZoomImage(id) {
          LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="'+this.id
                   +'.zoomimageCL(' + (this.zoomimagePOS - 1) + ');" />' ;
          if (this.zoomimagePLAY)
-         {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play" class="zoomimage_play" onclick="'+this.id
+         {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="'+this.id
                      +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
          else
-         {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play" class="zoomimage_play" onclick="'+this.id
+         {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="'+this.id
                      +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
             LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="'+this.id   
                      +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
@@ -106,7 +104,7 @@ function ZoomImage(id) {
    this.zoomimage_chargimg = function(pos)
    { if (pos != this.zoomimagePOS) { return ; }
       document.getElementById("zoomimage_cadre_0").className = "cache" ;
-      document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre).className = "affich" ; 
+      this.boShow("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
       // Prechargement du suivant
       let suiv = new Image() ;
@@ -122,7 +120,7 @@ function ZoomImage(id) {
    // ----- Fermer le diaporama -----
    this.zoomimage_Fermer = function()
    {  this.zoomimagePOS = -1 ;
-      document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre).className = "cache" ;
+      this.boHide("zoomimage_cadre_"+this.zoomimageNoCadre) ;
       this.boHide("zoomimage_fond")
       this.zoomimagePLAY  = false ;
    }
@@ -141,7 +139,7 @@ function ZoomImage(id) {
       let result = parseFloat(s.opacity) - 0.1 ;
       s.opacity = result ;
       if (result >= 0.05) {
-         setTimeout(function(){trThis.boHideBcl(id, trThis)}, 60);
+         setTimeout(function(){trThis.boHideBcl(id, trThis)}, 45);
       } else { document.getElementById(id).className = "cache" ; }
    }
    this.boHide = function(id) {
