@@ -6,6 +6,16 @@ A partir d'un ensemble d'image sur une page Web, ce script JavaScript permet de 
 
 ## mise en place et fonctionnement
 
+Fichiers nécessaire à l'utilisation (les autres sont des exemples):
+- zoomimage.css
+- zoomimage.js
+- zoomimage_croix.png
+- zoomimage_droite.png
+- zoomimage_gauche.png
+- zoomimage_loader.png
+- zoomimage_pause.png
+- zoomimage_play.png
+
 Il faut ajouter l'appel à la feuille de style dédiée :     
    **\<link href="zoomimage.css" type="text/css" rel="stylesheet" />**
 
@@ -23,5 +33,5 @@ Lien :
 **\<a href="grandeImage.jpg" class="zoomimage">\<img src="petiteImage.jpg" />\</a>**
 
 Image :    
-**\<img src="../PhotoTest/MiniTombRaider.jpg" class="zoomimage" />**
+**\<img src="grandeImage.jpg" class="zoomimage" />**
 
