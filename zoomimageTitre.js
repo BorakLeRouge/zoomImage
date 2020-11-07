@@ -16,6 +16,7 @@ function ZoomImage(id) {
    this.zoomimageNoCadrePrc = 1 ;
    this.zoomimageNoCadre    = 2 ;
    this.zoomimagePHOTO      = new Array() ;
+   this.zoomimageTITRE      = new Array() ;
    this.zoomimageCOUNT      = 0 ;
    this.zoomimagePLAY       = false ;
    this.zoomimagePOS        = -1 ;
@@ -106,6 +107,11 @@ function ZoomImage(id) {
       document.getElementById("zoomimage_cadre_0").className = "cache" ;
       this.boShow("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
+      // Alimentation titre
+      let titr = document.getElementById("zoomimage_titre") ;
+      titr.innerHTML = this.zoomimageTITRE[pos] ;
+      titr.style = "display: inline-block;" ; clog(titr);
+
       // Prechargement du suivant
       let suiv = new Image() ;
       suiv.src = this.zoomimagePHOTO[this.zoomimage_recadrepos(pos + 1)] ;
@@ -121,7 +127,7 @@ function ZoomImage(id) {
    this.zoomimage_Fermer = function()
    {  this.zoomimagePOS = -1 ;
       this.boHide("zoomimage_cadre_"+this.zoomimageNoCadre) ;
-      this.boHide("zoomimage_fond")
+      this.boHide("zoomimage_fond") ;
       this.zoomimagePLAY  = false ;
    }
    this.zoomimage_FondFermer = function()
@@ -168,19 +174,19 @@ function ZoomImage(id) {
       let ob = document.getElementsByClassName("zoomimage") ; 
       let zeThis = this ;
       for (idx in ob)
-      {  if(ob[idx].tagName == "IMG")
-         {  this.zoomimageCOUNT++ ;
-            let i = this.zoomimageCOUNT ;
-            this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].src ;
-            ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
-            ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
-         }
-         if(ob[idx].tagName == "A")
+      {  if(ob[idx].tagName == "A")
          {  this.zoomimageCOUNT++ ;
             let i = this.zoomimageCOUNT ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].href ;
             ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
             ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
+            let temp = ob[idx].nextSibling.nextSibling.innerHTML ; 
+            let p  = temp.indexOf("<br") ;
+            let t1 = temp.substr(0, p) ;
+            let t2 = temp.substr(p) ;  
+            p  = t2.indexOf(">") + 1
+            this.zoomimageTITRE[this.zoomimageCOUNT] = t1 + " - " + t2.substr(p) ; 
+            if (this.zoomimageTITRE[this.zoomimageCOUNT] == ' - ') { this.zoomimageTITRE[this.zoomimageCOUNT] = '' } ; 
          }
       } 
       // --- Chargement en cours
@@ -192,6 +198,7 @@ function ZoomImage(id) {
       // --- Prepar Image 
       document.write('<div id="zoomimage_cadre_1" class="cache" style="opacity: 1;"></div>') ; 
       document.write('<div id="zoomimage_cadre_2" class="cache" style="opacity: 1;"></div>') ; 
+      document.write('<div id="zoomimage_titre"   style="display: none;"></div') ;
       document.write('</div>') ;
    }
 

@@ -12,8 +12,7 @@ div#zoomimage_fond
 }
 
 div#zoomimage_cadre_0 
-{  display: block ;
-   position: absolute ;
+{  position: absolute ;
    top: 0 ;
    left: 0 ;
    margin: 0 ;
@@ -36,8 +35,7 @@ div#zoomimage_cadre_0 p
 }
 
 div#zoomimage_cadre_1, div#zoomimage_cadre_2 
-{  display: block ;
-   position: absolute ;
+{  position: absolute ;
    top: 0 ;
    left: 0 ;
    margin: 0 ;
@@ -123,7 +121,14 @@ div#zoomimage_fond img.zoomimage_croix
    border-style: none ;
 }
 
-#zoomimage_titre 
+div#zoomimage_fond.affich, div#zoomimage_cadre_0.affich, div#zoomimage_cadre_1.affich, div#zoomimage_cadre_2.affich 
+{  display: block ;
+}
+div#zoomimage_fond.cache, div#zoomimage_cadre_0.cache, div#zoomimage_cadre_1.cache, div#zoomimage_cadre_2.cache
+{  display: none ;
+}
+
+#zoomimage_titre
 {  display: inline-block ;
    padding: 0.2px 8px ;
    position: absolute ;
