@@ -121,11 +121,3 @@ div#zoomimage_fond img.zoomimage_croix
    border-style: none ;
 }
 
-div#zoomimage_fond.affich, div#zoomimage_cadre_0.affich, div#zoomimage_cadre_1.affich, div#zoomimage_cadre_2.affich 
-{  display: block ;
-}
-
-div#zoomimage_fond.cache, div#zoomimage_cadre_0.cache, div#zoomimage_cadre_1.cache, div#zoomimage_cadre_2.cache
-{  display: none ;
-}
-
