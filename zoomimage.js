@@ -55,6 +55,7 @@ function ZoomImage(id) {
    this.zoomimage = function(pos)
    { // * * Affichage du fond * *    
       this.zoomimageNoCadrePrc = this.zoomimageNoCadre ;
+      document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadrePrc).onclick = '' ;
       this.zoomimageNoCadre = 3 - this.zoomimageNoCadre ; 
       this.zoomimagePOS = this.zoomimage_recadrepos(pos) ; 
       let zoomimg = this.zoomimagePHOTO[this.zoomimagePOS] ;
@@ -143,7 +144,7 @@ function ZoomImage(id) {
    let result = parseFloat(s.opacity) - 0.1 ;
    s.opacity = result ;
    if (result >= 0.05) {
-      setTimeout(function(){trThis.boHideBcl(id, trThis)}, 45);
+      setTimeout(function(){trThis.boHideBcl(id, trThis)}, 30);
    } else { 
       document.getElementById(id).className = "cache" ; 
       document.getElementById(id).style.display = "none" ; 
@@ -158,7 +159,7 @@ this.boShowBcl = function(id, trThis) {
    let result = parseFloat(s.opacity) + 0.1 ;
    s.opacity = result ;
    if (result <= 0.95) {
-      setTimeout(function(){trThis.boShowBcl(id, trThis)}, 60);
+      setTimeout(function(){trThis.boShowBcl(id, trThis)}, 40);
    }
 }
 this.boShow = function(id) {
