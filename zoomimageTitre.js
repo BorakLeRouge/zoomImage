@@ -67,8 +67,7 @@ function ZoomImage(id) {
 
       // * * Préparation contenu du DIV * *
       LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="'+this.id
-               +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" onclick="'+this.id
-               +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
+               +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" />' ;
       if (this.zoomimageCOUNT > 1)
       {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="'+this.id+'.zoomimage_Fermer();" />' ;
          LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="'+this.id
@@ -93,7 +92,15 @@ function ZoomImage(id) {
       document.getElementById("zoomimage_cadre_0").style.display = "block" ;
       ZeObjDiv.className = "cache" ;
       ZeObjDiv.style.display = "none" ;
-      ZeObjDiv.innerHTML = LeCont ;  
+      ZeObjDiv.innerHTML = LeCont ;   
+      objimg = document.getElementById('zoomimage_image_'+this.zoomimageNoCadre) ;
+      objimg.onclick = function(ev) { 
+         if (ev.clientX < window.innerWidth / 2.2) {
+            zi.zoomimageCL(zi.zoomimagePOS - 1) ; 
+         } else {
+            zi.zoomimageCL(zi.zoomimagePOS + 1) ; 
+         }
+      }
    }
 
    this.zoomimageCL = function(pos)
