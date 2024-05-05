@@ -18,6 +18,8 @@ zoomImage = {
    zoomimagePLAY:        false ,
    zoomimagePOS:         -1 ,
    zoomimageInactClick:  false ,
+   
+   timeDiaporama:       4000 , 
 
 
    // ----- Recale la position si on déborde à droite ou a gauche -----
@@ -127,7 +129,7 @@ zoomImage = {
 
       // Diaporama auto
       if (this.zoomimagePLAY)
-      {  setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", 4000);
+      {  setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", this.timeDiaporama);
       }
    },
 
