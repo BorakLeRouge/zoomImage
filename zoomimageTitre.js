@@ -4,56 +4,53 @@
 //  Appel se fait d'une maniere simple : ajout d'une classe zoomimage sur un lien ou une image
 //
 //  <a href="xxx" class="zoomimage"><img src=xxx"></a>
-//  <img src="xxx" class="zoom image" />
+//  <img src="xxx" class="zoomimage" />
 //
 
-function clog(c) { console.log(c) ; }
-
-function ZoomImage(id) {
+zoomImage = {
 
    // ----- Les variables de travail, Permanente -----
-   this.id                  = id ;
-   this.zoomimageNoCadrePrc = 1 ;
-   this.zoomimageNoCadre    = 2 ;
-   this.zoomimagePHOTO      = new Array() ;
-   this.zoomimageTITRE      = new Array() ;
-   this.zoomimageCOUNT      = 0 ;
-   this.zoomimagePLAY       = false ;
-   this.zoomimagePOS        = -1 ;
-   this.zoomimageInactClick = false ;
+   zoomimageNoCadrePrc:  1 ,
+   zoomimageNoCadre:     2 ,
+   zoomimagePHOTO:       [] ,
+   zoomimageTITRE:       [] ,
+   zoomimageCOUNT:       0 ,
+   zoomimagePLAY:        false ,
+   zoomimagePOS:         -1 ,
+   zoomimageInactClick:  false ,
 
 
    // ----- Recale la position si on déborde à droite ou a gauche -----
-   this.zoomimage_recadrepos = function(pos)
+   zoomimage_recadrepos: function(pos)
    {  let rep = 1 * pos;
       if (rep < 1) { rep = this.zoomimageCOUNT ; }
       if (rep > this.zoomimageCOUNT) { rep = 1 ; }
       return rep ;
-   }
+   } ,
 
 
    // ----- Diaporama, affichage image + 1 -----
-   this.zoomimage_diapo = function(pos)
+   zoomimage_diapo: function(pos)
    {  if (pos == this.zoomimagePOS && this.zoomimagePLAY)
       {  this.zoomimage(pos + 1) ; 
       }
-   }
+   },
 
 
    // ----- Bascule Diaporama ON / OFF -----
-   this.zoomimage_btplay = function(pos)
+   zoomimage_btplay: function(pos)
    {  this.zoomimageInactClick = true ;
       this.zoomimagePLAY = !this.zoomimagePLAY ;
       if (this.zoomimagePLAY)
       {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src ="zoomimage_pause.png" ; 
-         setTimeout(this.id+".zoomimage_diapo("+pos+")", 200);
+         setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", 200);
       }
       else
       {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src = "zoomimage_play.png" ;
       }
-   }
+   },
 
-   this.zoomimage = function(pos)
+   zoomimage: function(pos)
    { // * * Affichage du fond * *    
       this.zoomimageNoCadrePrc = this.zoomimageNoCadre ;
       document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadrePrc).onclick = '' ;
@@ -66,19 +63,19 @@ function ZoomImage(id) {
       let ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
       // * * Préparation contenu du DIV * *
-      LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="'+this.id
+      LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="zoomImage'
                +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" />' ;
       if (this.zoomimageCOUNT > 1)
-      {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="'+this.id+'.zoomimage_Fermer();" />' ;
-         LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="'+this.id
+      {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="zoomImage.zoomimage_Fermer();" />' ;
+         LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="zoomImage'
                   +'.zoomimageCL(' + (this.zoomimagePOS - 1) + ');" />' ;
          if (this.zoomimagePLAY)
-         {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="'+this.id
+         {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
                      +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
          else
-         {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="'+this.id
+         {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
                      +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
-            LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="'+this.id   
+            LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="zoomImage'   
                      +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
       }
 
@@ -96,24 +93,24 @@ function ZoomImage(id) {
       objimg = document.getElementById('zoomimage_image_'+this.zoomimageNoCadre) ;
       objimg.onclick = function(ev) { 
          if (ev.clientX < window.innerWidth / 2.2) {
-            zi.zoomimageCL(zi.zoomimagePOS - 1) ; 
+            zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ; 
          } else {
-            zi.zoomimageCL(zi.zoomimagePOS + 1) ; 
+            zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ; 
          }
       }
-   }
+   },
 
-   this.zoomimageCL = function(pos)
+   zoomimageCL: function(pos)
    {  if (this.zoomimageCOUNT > 1)
       {  this.zoomimageInactClick = true ;
          this.zoomimage(pos) ;
       } else {
          this.zoomimage_Fermer()
       }
-   }
+   },
 
    // ----- image chargée (inLoad) il faut l'afficher -----
-   this.zoomimage_chargimg = function(pos)
+   zoomimage_chargimg: function(pos)
    { if (pos != this.zoomimagePOS) { return ; }
       document.getElementById("zoomimage_cadre_0").className = "cache" ;
       document.getElementById("zoomimage_cadre_0").style.display = 'none' ;
@@ -130,29 +127,29 @@ function ZoomImage(id) {
 
       // Diaporama auto
       if (this.zoomimagePLAY)
-      {  setTimeout(this.id+".zoomimage_diapo("+pos+")", 4000);
+      {  setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", 4000);
       }
-   }
+   },
 
 
    // ----- Fermer le diaporama -----
-   this.zoomimage_Fermer = function()
+   zoomimage_Fermer: function()
    {  this.zoomimagePOS = -1 ;
       this.boHide("zoomimage_cadre_"+this.zoomimageNoCadre) ;
       this.boHide("zoomimage_fond") ;
       this.zoomimagePLAY  = false ;
-   }
-   this.zoomimage_FondFermer = function()
+   },
+   zoomimage_FondFermer: function()
    {  if (!this.zoomimageInactClick)
       {  this.zoomimage_Fermer()
       }
       this.zoomimageInactClick = false ;
-   }
+   },
 
 
 
    // * * * * animation sur opacité * * * * *
-   this.boHideBcl = function(id, trThis) {
+   boHideBcl: function(id, trThis) {
       let s = document.getElementById(id).style ;
       let result = parseFloat(s.opacity) - 0.1 ;
       s.opacity = result ;
@@ -162,30 +159,30 @@ function ZoomImage(id) {
          document.getElementById(id).className = "cache" ; 
          document.getElementById(id).style.display = "none" ; 
       }
-   }
-   this.boHide = function(id) {
+   },
+   boHide: function(id) {
       document.getElementById(id).style.opacity = 1 ;
       this.boHideBcl(id, this) ;
-   }
-   this.boShowBcl = function(id, trThis) {
+   },
+   boShowBcl: function(id, trThis) {
       let s = document.getElementById(id).style ;
       let result = parseFloat(s.opacity) + 0.1 ;
       s.opacity = result ;
       if (result <= 0.95) {
          setTimeout(function(){trThis.boShowBcl(id, trThis)}, 40);
       }
-   }
-   this.boShow = function(id) {
+   },
+   boShow: function(id) {
       document.getElementById(id).style.opacity = 0 ;
       document.getElementById(id).style.display = 'block' ;
       document.getElementById(id).className = "affich" ;
       this.boShowBcl(id, this) ;
-   }
+   },
 
 
 
    // ----- Base d'affichage et de mise en place du diaporama -----
-   this.zoomimage_placezoom = function()
+   zoomimage_placezoom: function()
    {  // --- Recherche classe zoomimage ---
       let ob = document.getElementsByClassName("zoomimage") ; 
       let zeThis = this ;
@@ -206,7 +203,7 @@ function ZoomImage(id) {
          }
       } 
       // --- Chargement en cours
-      document.write('<div id="zoomimage_fond"    class="cache" style="display: none; opacity: 0;" onclick="'+this.id+'.zoomimage_FondFermer();" >') ;
+      document.write('<div id="zoomimage_fond"    class="cache" style="display: none; opacity: 0;" onclick="zoomImage.zoomimage_FondFermer();" >') ;
       document.write('<div id="zoomimage_cadre_0" class="cache" style="display: none; opacity: 1;">') ;
       document.write('<p>Loading . . .<br />') ;
       document.write('<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>') ;
@@ -221,5 +218,4 @@ function ZoomImage(id) {
 }
 
 // ----- Affichage
-let zi = new ZoomImage('zi') ;
-zi.zoomimage_placezoom() ;
+zoomImage.zoomimage_placezoom() ;
