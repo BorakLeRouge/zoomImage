@@ -250,7 +250,6 @@ zoomImage = {
          zoomImage.zoomimageTouchX = 'None' ;
       })
       document.addEventListener('touchend', function(event) {
-         console.log(event) ;
          if (zoomImage.zoomimagePOS > 0 && zoomImage.zoomimageTouchX != 'None') {
             let deplacement = event.changedTouches[0].clientX - zoomImage.zoomimageTouchX ; 
             if (deplacement > 200) {
