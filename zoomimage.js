@@ -17,6 +17,7 @@ zoomImage = {
    zoomimagePLAY:       false ,
    zoomimagePOS:        -1 ,
    zoomimageInactClick: false ,
+   zoomimageTouchX:     'None' ,
    
    timeDiaporama:       4000 , 
    
@@ -212,7 +213,10 @@ zoomImage = {
       cont += '<div id="zoomimage_cadre_1" class="cache" style="display: none; opacity: 1;"></div>' ; 
       cont += '<div id="zoomimage_cadre_2" class="cache" style="display: none; opacity: 1;"></div>' ; 
       cont += '</div>' ;
-      document.write(cont) ;
+      base = document.createElement('div') ;
+      base.id = "zoomimage_base" ;
+      document.body.appendChild(base) ;
+      base.innerHTML = cont ;
 
       // Gestion clavier
       document.addEventListener('keydown', function(event) {
@@ -225,6 +229,27 @@ zoomImage = {
                   zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
                   break ;
             }
+         }
+      })
+
+      // Gestion tactile
+      document.addEventListener('touchstart', function(event) {
+         zoomImage.zoomimageTouchX = event.touches[0].clientX ;
+      })
+      document.addEventListener('touchcancel', function(event) {
+         zoomImage.zoomimageTouchX = 'None' ;
+      })
+      document.addEventListener('touchend', function(event) {
+         console.log(event) ;
+         if (zoomImage.zoomimagePOS > 0 && zoomImage.zoomimageTouchX != 'None') {
+            let deplacement = event.changedTouches[0].clientX - zoomImage.zoomimageTouchX ; 
+            if (deplacement > 200) {
+               zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
+            }
+            if (deplacement < -200) {
+               zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ;
+            }
+            zoomImage.zoomimageTouchX = 'None' ;
          }
       })
    }

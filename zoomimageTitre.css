@@ -1,3 +1,7 @@
+div#zoomimage_base 
+{  margin: 0 ;
+   padding: 0 ;
+}
 div#zoomimage_fond 
 {  background-color: rgba(0,0,0,0.7) ;
    position: absolute ;
