@@ -22,8 +22,8 @@ zoomImage = {
    
 
    // ----- Recale la position si on déborde à droite ou a gauche -----
-   zoomimage_recadrepos: function(pos)
-   {  let rep = 1 * pos;
+   zoomimage_recadrepos: function(pos) {
+      let rep = 1 * pos;
       if (rep < 1) { rep = this.zoomimageCOUNT ; }
       if (rep > this.zoomimageCOUNT) { rep = 1 ; }
       return rep ;
@@ -31,28 +31,27 @@ zoomImage = {
 
 
    // ----- Diaporama, affichage image + 1 -----
-   zoomimage_diapo: function(pos)
-   {  if (pos == this.zoomimagePOS && this.zoomimagePLAY)
+   zoomimage_diapo: function(pos) {
+      if (pos == this.zoomimagePOS && this.zoomimagePLAY)
       {  this.zoomimage(pos + 1) ; 
       }
    } ,
 
 
    // ----- Bascule Diaporama ON / OFF -----
-   zoomimage_btplay: function(pos)
-   {  this.zoomimageInactClick = true ;
+   zoomimage_btplay: function(pos) {
+      this.zoomimageInactClick = true ;
       this.zoomimagePLAY = !this.zoomimagePLAY ;
-      if (this.zoomimagePLAY)
-      {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src ="zoomimage_pause.png" ; 
+      if (this.zoomimagePLAY) {
+         document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src ="zoomimage_pause.png" ; 
          setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", 200);
-      }
-      else
-      {  document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src = "zoomimage_play.png" ;
+      } else {
+         document.getElementById("zoomimage_play"+this.zoomimageNoCadre).src = "zoomimage_play.png" ;
       }
    } ,
 
-   zoomimage: function(pos)
-   { // * * Affichage du fond * *    
+   zoomimage: function(pos) {
+      // * * Affichage du fond * *    
       this.zoomimageNoCadrePrc = this.zoomimageNoCadre ;
       document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadrePrc).onclick = '' ;
       this.zoomimageNoCadre = 3 - this.zoomimageNoCadre ; 
@@ -66,18 +65,19 @@ zoomImage = {
       // * * Préparation contenu du DIV * *
       LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="zoomImage'
                +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" />' ;
-      if (this.zoomimageCOUNT > 1)
-      {  LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="zoomImage.zoomimage_Fermer();" />' ;
+      if (this.zoomimageCOUNT > 1) {
+         LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="zoomImage.zoomimage_Fermer();" />' ;
          LeCont += '<img src="zoomimage_gauche.png" alt="<-" class="zoomimage_gauche" onclick="zoomImage'
                   +'.zoomimageCL(' + (this.zoomimagePOS - 1) + ');" />' ;
-         if (this.zoomimagePLAY)
-         {  LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
-                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
-         else
-         {  LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
-                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; }
-            LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="zoomImage'   
-                     +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
+         if (this.zoomimagePLAY) {
+            LeCont += '<img src="zoomimage_pause.png" alt="Pause" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
+                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; 
+         } else {
+           LeCont += '<img src="zoomimage_play.png" alt="Play" id="zoomimage_play'+this.zoomimageNoCadre+'" class="zoomimage_play" onclick="zoomImage'
+                     +'.zoomimage_btplay(' + (this.zoomimagePOS) + ');" />' ; 
+         }
+         LeCont += '<img src="zoomimage_droite.png" alt="->" class="zoomimage_droite" onclick="zoomImage'   
+                    +'.zoomimageCL(' + (this.zoomimagePOS + 1) + ');" />' ;
       }
 
       // * * Affichage * *
@@ -101,9 +101,9 @@ zoomImage = {
       }
    } ,
 
-   zoomimageCL: function(pos)
-   {  if (this.zoomimageCOUNT > 1)
-      {  this.zoomimageInactClick = true ;
+   zoomimageCL: function(pos) {
+      if (this.zoomimageCOUNT > 1) {
+         this.zoomimageInactClick = true ;
          this.zoomimage(pos) ;
       } else {
          this.zoomimage_Fermer()
@@ -111,8 +111,8 @@ zoomImage = {
    } ,
 
    // ----- image chargée (inLoad) il faut l'afficher -----
-   zoomimage_chargimg: function(pos)
-   { if (pos != this.zoomimagePOS) { return ; }
+   zoomimage_chargimg: function(pos) {
+      if (pos != this.zoomimagePOS) { return ; }
       document.getElementById("zoomimage_cadre_0").className = "cache" ;
       document.getElementById("zoomimage_cadre_0").style.display = 'none' ;
       this.boShow("zoomimage_cadre_"+this.zoomimageNoCadre) ;
@@ -122,26 +122,28 @@ zoomImage = {
       suiv.src = this.zoomimagePHOTO[this.zoomimage_recadrepos(pos + 1)] ;
 
       // Diaporama auto
-      if (this.zoomimagePLAY)
-      {  setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", this.timeDiaporama);
+      if (this.zoomimagePLAY) {
+         setTimeout('zoomImage'+".zoomimage_diapo("+pos+")", this.timeDiaporama);
       }
    } ,
 
 
    // ----- Fermer le diaporama -----
-   zoomimage_Fermer: function()
-   {  this.zoomimagePOS = -1 ;
+   zoomimage_Fermer: function() {
+      this.zoomimagePOS = -1 ;
       this.boHide("zoomimage_cadre_"+this.zoomimageNoCadre) ;
       this.boHide("zoomimage_fond")
       this.zoomimagePLAY  = false ;
    } ,
 
-   zoomimage_FondFermer: function()
-   {  if (!this.zoomimageInactClick)
-      {  this.zoomimage_Fermer()
+   zoomimage_FondFermer: function() {
+      if (!this.zoomimageInactClick) {
+         this.zoomimage_Fermer()
       }
       this.zoomimageInactClick = false ;
    } ,
+
+   
 
 
 
@@ -179,20 +181,20 @@ zoomImage = {
 
 
    // ----- Base d'affichage et de mise en place du diaporama -----
-   zoomimage_placezoom: function()
-   {  // --- Recherche classe zoomimage ---
+   zoomimage_placezoom: function(){
+      // --- Recherche classe zoomimage ---
       let ob = document.getElementsByClassName("zoomimage") ; 
       let zeThis = this ;
-      for (idx in ob)
-      {  if(ob[idx].tagName == "IMG")
-         {  this.zoomimageCOUNT++ ;
+      for (idx in ob) {
+         if(ob[idx].tagName == "IMG") {
+            this.zoomimageCOUNT++ ;
             let i = this.zoomimageCOUNT ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].src ;
             ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
             ob[idx].className = ob[idx].className.replace('zoomimagOK', 'zoomimage') ; 
          }
-         if(ob[idx].tagName == "A")
-         {  this.zoomimageCOUNT++ ;
+         if(ob[idx].tagName == "A") {
+            this.zoomimageCOUNT++ ;
             let i = this.zoomimageCOUNT ;
             this.zoomimagePHOTO[this.zoomimageCOUNT] = ob[idx].href ;
             ob[idx].onclick = function() { zeThis.zoomimage(i); return false ;} ;
@@ -200,15 +202,31 @@ zoomImage = {
          }
       } 
       // --- Chargement en cours
-      document.write('<div id="zoomimage_fond"    class="cache" style="display: none; opacity: 0;" onclick="zoomImage.zoomimage_FondFermer();" >') ;
-      document.write('<div id="zoomimage_cadre_0" class="cache" style="display: none; opacity: 1;">') ;
-      document.write('<p>Loading . . .<br />') ;
-      document.write('<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>') ;
-      document.write('</div>') ;
+      let cont = '' ;
+      cont += '<div id="zoomimage_fond"    class="cache" style="display: none; opacity: 0;" onclick="zoomImage.zoomimage_FondFermer();" >' ;
+      cont += '<div id="zoomimage_cadre_0" class="cache" style="display: none; opacity: 1;">' ;
+      cont += '<p>Loading . . .<br />' ;
+      cont += '<img src="zoomimage_loader.gif" alt="En chargement ..." /></p>' ;
+      cont += '</div>' ;
       // --- Prepar Image 
-      document.write('<div id="zoomimage_cadre_1" class="cache" style="display: none; opacity: 1;"></div>') ; 
-      document.write('<div id="zoomimage_cadre_2" class="cache" style="display: none; opacity: 1;"></div>') ; 
-      document.write('</div>') ;
+      cont += '<div id="zoomimage_cadre_1" class="cache" style="display: none; opacity: 1;"></div>' ; 
+      cont += '<div id="zoomimage_cadre_2" class="cache" style="display: none; opacity: 1;"></div>' ; 
+      cont += '</div>' ;
+      document.write(cont) ;
+
+      // Gestion clavier
+      document.addEventListener('keydown', function(event) {
+         if (zoomImage.zoomimagePOS > 0) {
+            switch(event.key) {
+               case "ArrowLeft":
+                  zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ;
+                  break ;
+               case "ArrowRight":
+                  zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
+                  break ;
+            }
+         }
+      })
    }
 
 }
