@@ -93,7 +93,7 @@ zoomImage = {
       ZeObjDiv.className = "cache" ;
       ZeObjDiv.style.display = "none" ;
       ZeObjDiv.innerHTML = LeCont ;   
-      objimg = document.getElementById('zoomimage_image_'+this.zoomimageNoCadre) ;
+      let objimg = document.getElementById('zoomimage_image_'+this.zoomimageNoCadre) ;
       objimg.onclick = function(ev) { 
          if (ev.clientX < window.innerWidth / 2.2) {
             zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ; 
@@ -189,7 +189,7 @@ zoomImage = {
    {  // --- Recherche classe zoomimage ---
       let ob = document.getElementsByClassName("zoomimage") ; 
       let zeThis = this ;
-      for (idx in ob)
+      for (let idx in ob)
       {  if(ob[idx].tagName == "A")
          {  this.zoomimageCOUNT++ ;
             let i = this.zoomimageCOUNT ;
@@ -223,7 +223,7 @@ zoomImage = {
       cont += '<div id="zoomimage_cadre_2" class="cache" style="display: none; opacity: 1;"></div>' ; 
       cont += '<div id="zoomimage_titre"   style="display: none;"></div' ;
       cont += '</div>' ;
-      base = document.createElement('div') ;
+      let base = document.createElement('div') ;
       base.id = "zoomimage_base" ;
       document.body.appendChild(base) ;
       base.innerHTML = cont ;
