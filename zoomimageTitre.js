@@ -253,10 +253,10 @@ zoomImage = {
          if (zoomImage.zoomimagePOS > 0 && zoomImage.zoomimageTouchX != 'None') {
             let deplacement = event.changedTouches[0].clientX - zoomImage.zoomimageTouchX ; 
             if (deplacement > 100) {
-               zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
+               zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ;
             }
             if (deplacement < -100) {
-               zoomImage.zoomimageCL(zoomImage.zoomimagePOS - 1) ;
+               zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
             }
             zoomImage.zoomimageTouchX = 'None' ;
          }
