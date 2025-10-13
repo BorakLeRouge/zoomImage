@@ -64,7 +64,7 @@ zoomImage = {
       let ZeObjDiv = document.getElementById("zoomimage_cadre_"+this.zoomimageNoCadre) ;
 
       // * * Préparation contenu du DIV * *
-      LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="zoomImage'
+      let LeCont =  '<img src="' + zoomimg + '" alt="" id="zoomimage_image_'+this.zoomimageNoCadre+'" onload="zoomImage'
                +'.zoomimage_chargimg(' + (this.zoomimagePOS) + ');" />' ;
       if (this.zoomimageCOUNT > 1) {
          LeCont += '<img src="zoomimage_croix.png" alt="fermer" class="zoomimage_croix" onclick="zoomImage.zoomimage_Fermer();" />' ;
