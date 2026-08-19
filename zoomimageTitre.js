@@ -238,6 +238,14 @@ zoomImage = {
                case "ArrowRight":
                   zoomImage.zoomimageCL(zoomImage.zoomimagePOS + 1) ;
                   break ;
+               case "Escape":
+                  zoomImage.zoomimage_Fermer() ;
+                  break ;
+               case " ":
+               case "Space":
+               case "Spacebar":
+                  zoomImage.zoomimage_btplay(zoomImage.zoomimagePOS) ;
+                  break ;
             }
          }
       })
